@@ -22,6 +22,9 @@ public class Pi implements PiInterface {
 				if (c.equal(vi)) {
 					// je fais deux fois la meme chose il y avait surement une
 					// facon de faire quelaue chose de mieux...
+					
+					/*  <YM> oui, initialiser tous les vertex dès le début avec un poids infini  </YM> */
+					
 					c.setPoids(poids);
 				}
 			}

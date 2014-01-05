@@ -100,7 +100,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 				int y = 0;
 
 				// on construit le labyrinthe
-				while (c != 'f') {
+				while (c != 'f') {  // <YM> Mouais je sais pas si c'est très propre d'indiquer la fin des fichiers comme ça... On aurait pu créer une exception. </YM>
 					int x = 0;
 					while (c != '/' && c != 'f') {
 						System.out.println(c + " x= " + x + " y= " + y + '.');
@@ -129,7 +129,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 	
 	public void load(){
-		this.load("maze.txt");
+		this.load("maze.txt"); // <YM> C'est pas plutôt "./maze.txt" le nom du fichier (désigné par son chemin) ? </YM>
 	}
 
 	// - - - - - - - - - auxiliaire - - - - - - - - -
@@ -146,10 +146,13 @@ public class Maze implements GraphInterface, MazeViewSource {
 			retour = new DBox(posX, posY);
 		else {
 			retour = null;
-			System.out.println("erreur de caractere" + (int) c);
+			System.out.println("erreur de caractere" + (int) c);  //<YM> Pas (char) c ? On saurait quel caractère bugue. </YM>
 		}
 		return retour;
 	}
+	
+	// <YM> Qu'en est-il de la gestion de plusieurs occurences de A ou D ? On peut faire une exception encore! =D </YM>
+	
 
 	// ******* sauvegarder dans un fichier texte *********
 
@@ -158,6 +161,8 @@ public class Maze implements GraphInterface, MazeViewSource {
 			PrintWriter p = new PrintWriter(fileName);
 			BufferedWriter bw = new BufferedWriter(p);
 			// IL FAUT RESET LE FICHIER TXT
+			
+			
 
 			// A FAIRE !!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -220,6 +225,20 @@ public class Maze implements GraphInterface, MazeViewSource {
 			retour = false;
 		return retour;
 	}
+	
+	/*<YM>
+	 * On pourrait mettre aussi:
+	 * if ...
+	 * 		return true
+	 * else if ...
+	 * 		return true
+	 * else ...
+	 * 		return false
+	 * 
+	 * Pas besoin de créer retour, non? 
+	 * 
+	 * </YM>
+	 */
 
 	// ******** methodes simples de GraphInterface ********
 
