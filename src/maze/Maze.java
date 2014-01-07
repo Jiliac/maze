@@ -27,12 +27,10 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// ************** implementation de MazeViewSource *************
 
 	public boolean handleClick(MouseEvent arg0, MazeView arg1) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean handleKey(KeyEvent arg0, MazeView arg1) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -118,11 +116,9 @@ public class Maze implements GraphInterface, MazeViewSource {
 				// on ferme
 				br.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -131,8 +127,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void load() throws MazeException {
-		this.load("maze.txt"); // <YM> C'est pas plutôt "./maze.txt" le nom du
-								// fichier (désigné par son chemin) ? </YM>
+		this.load("./maze.txt");
 	}
 
 	// - - - - - - - - - auxiliaire - - - - - - - - -
@@ -161,6 +156,9 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	// ******* sauvegarder dans un fichier texte *********
+	
+	//Nécessité d'avoir comme nom de fichier "exemple.txt" et pas "exemple".
+	
 
 	public void save(String fileName) {
 		try (FileOutputStream fis = new FileOutputStream("./filename");) {
@@ -192,7 +190,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void save() {
-		this.save("maze.txt");
+		this.save("maze_backup.txt");
 	}
 
 	// ************ gestion de parente ***************
