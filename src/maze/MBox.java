@@ -70,4 +70,16 @@ public abstract class MBox implements VertexInterface {
 	public int getPosY() {
 		return posY;
 	}
+	
+	// ************* implementation necessaire au shortestPath ****************
+	
+	private boolean isInShortestPath = false;
+
+	public boolean isInShortestPath() {
+		return isInShortestPath;
+	}
+
+	public void setInShortestPath(boolean isInShortestPath) {
+		this.isInShortestPath = isInShortestPath;
+	}
 }

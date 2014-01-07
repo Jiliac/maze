@@ -22,8 +22,6 @@ import Dijkstra.Pi;
 import Dijkstra.VertexInterface;
 import Dijkstra.GraphInterface;
 
-import java.util.Calendar;
-
 public class Maze implements GraphInterface, MazeViewSource {
 
 	// ************** implementation de MazeViewSource *************
@@ -40,6 +38,11 @@ public class Maze implements GraphInterface, MazeViewSource {
 		MBox box = (MBox) this.getVI(row, column);
 		char c = box.getType();
 		String str = "" + c;
+		
+		// pour le shortestPath
+		if(str=="E" && box.isInShortestPath()==true)
+			str="*";
+		
 		return str;
 	}
 
@@ -262,6 +265,10 @@ public class Maze implements GraphInterface, MazeViewSource {
 		Dijkstra d = new Dijkstra(this, pi, new ASet(pi));
 		ASet retour = (ASet) d.shortestPath();
 
+		
+		// là j'enlève ta boucle puisque c'est pas la peine
+		
+		/*
 		for (VertexInterface vi : alVi) {
 			//int s = Calendar.SECOND;
 			if (((MBox) vi).getType() != 'A' && ((MBox) vi).getType() != 'D') {
@@ -271,6 +278,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 				this.setSymbolForBox(i, j, "D");
 			}
 		}
+		*/
 
 		return retour;
 	}

@@ -1,6 +1,7 @@
 package maze;
 
 import Dijkstra.ASet;
+import Dijkstra.VertexInterface;
 import fr.enst.inf103.ui.MazeViewController;
 import fr.enst.inf103.ui.MazeViewSource;
 
@@ -9,7 +10,11 @@ public class MazeController implements MazeViewController{
 	// ********* implementation de MazeViewController ********
 	//ASet shortestPath;
 	public void calculateShortestPath(){
-		maze.getShortestPath();
+		ASet aSet = maze.getShortestPath();
+		for(VertexInterface vi : aSet.getSommet())
+			vi.setInShortestPath(true);
+		//ca marche si on utilise ca qu'une seule fois mais ca ne marcherait pas si on doit changer les cases...
+			
 	}
 	
 	public MazeViewSource openMaze(String fileName){

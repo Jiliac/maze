@@ -12,4 +12,10 @@ public interface VertexInterface {
 	public void addFils(VertexInterface vi);
 
 	public boolean isPrevious(VertexInterface fils);
+
+	// ************* implementation necessaire au shortestPath ****************
+
+	public boolean isInShortestPath();
+
+	public void setInShortestPath(boolean isInShortestPath);
 }
