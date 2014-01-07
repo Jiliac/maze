@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.FileOutputStream;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 
 import fr.enst.inf103.ui.MazeView;
@@ -75,12 +77,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 		this.setPrevious();
 	}
 
-	public Maze() throws MazeException{
+	public Maze() throws MazeException {
 		this.load();
 		this.setPrevious();
 	}
 
-	public Maze(String fileName) throws MazeException{
+	public Maze(String fileName) throws MazeException {
 		this.load(fileName);
 		this.setPrevious();
 	}
@@ -100,7 +102,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 				int y = 0;
 
 				// on construit le labyrinthe
-				while (c != ';') {  
+				while (c != ';') {
 					int x = 0;
 					while (c != '/' && c != ';') {
 						System.out.println(c + " x= " + x + " y= " + y + '.');
@@ -128,56 +130,62 @@ public class Maze implements GraphInterface, MazeViewSource {
 		this.setPrevious();
 	}
 
-	public void load() throws MazeException{
+	public void load() throws MazeException {
 		this.load("maze.txt"); // <YM> C'est pas plutôt "./maze.txt" le nom du
 								// fichier (désigné par son chemin) ? </YM>
 	}
 
 	// - - - - - - - - - auxiliaire - - - - - - - - -
 
-	private MBox createBox(int posX, int posY, char c) throws MazeException{
-		MBox retour=new EBox(posX, posY);
+	private MBox createBox(int posX, int posY, char c) throws MazeException {
+		MBox retour = new EBox(posX, posY);
 		if (c == 'W')
 			retour = new WBox(posX, posY);
-		else if (c == 'E'){}
-		else if (c == 'A')
-			if(alVi.indexOf(new ABox(0,0))!=-1){
+		else if (c == 'E') {
+		} else if (c == 'A')
+			if (alVi.indexOf(new ABox(0, 0)) != -1) {
 				throw new MazeException("Deja une case d'arrivee!");
+			} else {
+				retour = new ABox(posX, posY);
 			}
-			else {
-				retour = new ABox(posX, posY);}
 		else if (c == 'D')
-			if(alVi.indexOf(new DBox(0,0))!=-1){
+			if (alVi.indexOf(new DBox(0, 0)) != -1) {
 				throw new MazeException("Deja une case de depart!");
+			} else {
+				retour = new DBox(posX, posY);
 			}
-			else {
-			retour = new DBox(posX, posY);}
 		else {
-			throw new MazeException("erreur de caractere" +  c);
+			throw new MazeException("erreur de caractere" + c);
 		}
 		return retour;
 	}
 
-
 	// ******* sauvegarder dans un fichier texte *********
 
 	public void save(String fileName) {
-		try {
-			PrintWriter p = new PrintWriter(fileName);
-			BufferedWriter bw = new BufferedWriter(p);
-			// IL FAUT RESET LE FICHIER TXT
-
-			// A FAIRE !!!!!!!!!!!!!!!!!!!!!!!!!!
-
-			try {
-
-				bw.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try (FileOutputStream fis = new FileOutputStream("./filename");) {
+			CharBuffer cb = CharBuffer.allocate(1);
+			this.setBorne();
+			for (int i = 0; i < maxX; i++) {
+				for (int j = 0; j < maxY; j++) {
+					MBox m = (MBox) getVI(i, j);
+					if (m == null) {
+						m = new EBox(i, j);
+					}
+					cb.put(m.getType());
+				}
+				cb.put('/');
 			}
+			cb.put(';');
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Le fichier existe déjà ou ne peut être écrit.");
+		}
+		catch(BufferOverflowException e){
+			e.printStackTrace();
+		}
+		catch(ReadOnlyBufferException e){
 			e.printStackTrace();
 		}
 
@@ -221,13 +229,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 	public boolean isPrevious(VertexInterface pere, VertexInterface fils) {
 		if (pere.isPrevious(fils))
 			return true;
-			else if (fils.isPrevious(pere))
+		else if (fils.isPrevious(pere))
 			return true;
 		else
 			return false;
-		
-	}
 
+	}
 
 	// ******** methodes simples de GraphInterface ********
 
