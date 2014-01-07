@@ -38,11 +38,11 @@ public class Maze implements GraphInterface, MazeViewSource {
 		MBox box = (MBox) this.getVI(row, column);
 		char c = box.getType();
 		String str = "" + c;
-		
+
 		// pour le shortestPath
-		if(str=="E" && box.isInShortestPath()==true)
-			str="*";
-		
+		if (str == "E" && box.isInShortestPath())
+			str = "*";
+
 		return str;
 	}
 
@@ -141,28 +141,26 @@ public class Maze implements GraphInterface, MazeViewSource {
 		MBox retour = new EBox(posX, posY);
 		if (c == 'W')
 			retour = new WBox(posX, posY);
-		else if (c == 'E') {
-		} else if (c == 'A')
-			if (alVi.indexOf(new ABox(0, 0)) != -1) {
+		else if (c == 'E') { //variable deja initialise
+		} else if (c == 'A') {
+			if (alVi.indexOf(new ABox(0, 0)) != -1)
 				throw new MazeException("Deja une case d'arrivee!");
-			} else {
+			else
 				retour = new ABox(posX, posY);
-			}
-		else if (c == 'D')
-			if (alVi.indexOf(new DBox(0, 0)) != -1) {
+		} else if (c == 'D') {
+			if (alVi.indexOf(new DBox(0, 0)) != -1)
 				throw new MazeException("Deja une case de depart!");
-			} else {
+			else
 				retour = new DBox(posX, posY);
-			}
-		else {
+		} else
 			throw new MazeException(" Caractere non recevable: " + c);
-		}
+
 		return retour;
 	}
 
 	// ******* sauvegarder dans un fichier texte *********
 
-	// Nécessité d'avoir comme nom de fichier "exemple.txt" et pas "exemple".
+	// Necessite d'avoir comme nom de fichier "exemple.txt" et pas "exemple".
 
 	public void save(String fileName) {
 		try (FileOutputStream fis = new FileOutputStream("./" + fileName);) {
@@ -178,7 +176,8 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.out.println("Le fichier existe déjà ou ne peut être écrit.");
+			System.out
+					.println("Le fichier existe deja� ou ne peut etre ecrit.");
 		} catch (BufferOverflowException e) {
 			e.printStackTrace();
 		} catch (ReadOnlyBufferException e) {
@@ -225,13 +224,15 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public boolean isPrevious(VertexInterface pere, VertexInterface fils) {
-		if (pere.isPrevious(fils))
-			return true;
-		else if (fils.isPrevious(pere))
-			return true;
-		else
+		if (fils instanceof EBox && pere instanceof EBox) {
+			if (pere.isPrevious(fils))
+				return true;
+			else if (fils.isPrevious(pere))
+				return true;
+			else
+				return false;
+		} else
 			return false;
-
 	}
 
 	// ******** methodes simples de GraphInterface ********
@@ -264,21 +265,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 		Pi pi = new Pi();
 		Dijkstra d = new Dijkstra(this, pi, new ASet(pi));
 		ASet retour = (ASet) d.shortestPath();
-
-		
-		// l� j'enl�ve ta boucle puisque c'est pas la peine
-		
-		/*
-		for (VertexInterface vi : alVi) {
-			//int s = Calendar.SECOND;
-			if (((MBox) vi).getType() != 'A' && ((MBox) vi).getType() != 'D') {
-				int i = ((MBox) vi).getPosX();
-				int j = ((MBox) vi).getPosY();
-				//while (Calendar.SECOND < s + 2) {}
-				this.setSymbolForBox(i, j, "D");
-			}
-		}
-		*/
 
 		return retour;
 	}
