@@ -33,6 +33,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	public String getSymbolForBox(int row, int column) {
 		MBox box = (MBox) this.getVI(row, column);
 		char c = box.getType();
@@ -41,7 +42,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void setSymbolForBox(int row, int column, String str) {
-		MBox box = (MBox) this.getVI(row, column);
 		if (str == "A")
 			this.setVI(row, column, new ABox(row, column));
 		else if (str == "E")
@@ -75,19 +75,19 @@ public class Maze implements GraphInterface, MazeViewSource {
 		this.setPrevious();
 	}
 
-	public Maze() {
+	public Maze() throws MazeException{
 		this.load();
 		this.setPrevious();
 	}
-	
-	public Maze(String fileName) {
+
+	public Maze(String fileName) throws MazeException{
 		this.load(fileName);
 		this.setPrevious();
 	}
 
 	// ************* constructeur a partir d'un fichier texte **********
 
-	public void load(String fileName) {
+	public void load(String fileName) throws MazeException {
 		alVi = new ArrayList<VertexInterface>();
 		Reader r;
 		try {
@@ -100,15 +100,15 @@ public class Maze implements GraphInterface, MazeViewSource {
 				int y = 0;
 
 				// on construit le labyrinthe
-				while (c != 'f') {  // <YM> Mouais je sais pas si c'est très propre d'indiquer la fin des fichiers comme ça... On aurait pu créer une exception. </YM>
+				while (c != ';') {  
 					int x = 0;
-					while (c != '/' && c != 'f') {
+					while (c != '/' && c != ';') {
 						System.out.println(c + " x= " + x + " y= " + y + '.');
 						alVi.add(this.createBox(x, y, c));
 						c = (char) br.read();
 						x++;
 					}
-					if (c != 'f')
+					if (c != ';')
 						c = (char) br.read();
 					y++;
 				}
@@ -127,32 +127,37 @@ public class Maze implements GraphInterface, MazeViewSource {
 		// on contruit les relations de parente
 		this.setPrevious();
 	}
-	
-	public void load(){
-		this.load("maze.txt"); // <YM> C'est pas plutôt "./maze.txt" le nom du fichier (désigné par son chemin) ? </YM>
+
+	public void load() throws MazeException{
+		this.load("maze.txt"); // <YM> C'est pas plutôt "./maze.txt" le nom du
+								// fichier (désigné par son chemin) ? </YM>
 	}
 
 	// - - - - - - - - - auxiliaire - - - - - - - - -
 
-	private MBox createBox(int posX, int posY, char c) {
-		MBox retour;
+	private MBox createBox(int posX, int posY, char c) throws MazeException{
+		MBox retour=new EBox(posX, posY);
 		if (c == 'W')
 			retour = new WBox(posX, posY);
-		else if (c == 'E')
-			retour = new EBox(posX, posY);
+		else if (c == 'E'){}
 		else if (c == 'A')
-			retour = new ABox(posX, posY);
+			if(alVi.indexOf(new ABox(0,0))!=-1){
+				throw new MazeException("Deja une case d'arrivee!");
+			}
+			else {
+				retour = new ABox(posX, posY);}
 		else if (c == 'D')
-			retour = new DBox(posX, posY);
+			if(alVi.indexOf(new DBox(0,0))!=-1){
+				throw new MazeException("Deja une case de depart!");
+			}
+			else {
+			retour = new DBox(posX, posY);}
 		else {
-			retour = null;
-			System.out.println("erreur de caractere" + (int) c);  //<YM> Pas (char) c ? On saurait quel caractère bugue. </YM>
+			throw new MazeException("erreur de caractere" +  c);
 		}
 		return retour;
 	}
-	
-	// <YM> Qu'en est-il de la gestion de plusieurs occurences de A ou D ? On peut faire une exception encore! =D </YM>
-	
+
 
 	// ******* sauvegarder dans un fichier texte *********
 
@@ -161,8 +166,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 			PrintWriter p = new PrintWriter(fileName);
 			BufferedWriter bw = new BufferedWriter(p);
 			// IL FAUT RESET LE FICHIER TXT
-			
-			
 
 			// A FAIRE !!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -179,8 +182,8 @@ public class Maze implements GraphInterface, MazeViewSource {
 		}
 
 	}
-	
-	public void save(){
+
+	public void save() {
 		this.save("maze.txt");
 	}
 
@@ -216,29 +219,15 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public boolean isPrevious(VertexInterface pere, VertexInterface fils) {
-		boolean retour;
 		if (pere.isPrevious(fils))
-			retour = true;
-		else if (fils.isPrevious(pere))
-			retour = true;
+			return true;
+			else if (fils.isPrevious(pere))
+			return true;
 		else
-			retour = false;
-		return retour;
+			return false;
+		
 	}
-	
-	/*<YM>
-	 * On pourrait mettre aussi:
-	 * if ...
-	 * 		return true
-	 * else if ...
-	 * 		return true
-	 * else ...
-	 * 		return false
-	 * 
-	 * Pas besoin de créer retour, non? 
-	 * 
-	 * </YM>
-	 */
+
 
 	// ******** methodes simples de GraphInterface ********
 

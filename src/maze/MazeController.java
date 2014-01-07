@@ -13,7 +13,12 @@ public class MazeController implements MazeViewController{
 	}
 	
 	public MazeViewSource openMaze(String fileName){
-		maze = new Maze(fileName);
+		try {
+			maze = new Maze(fileName);
+		} catch (MazeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return maze;
 	}
 	
@@ -25,7 +30,12 @@ public class MazeController implements MazeViewController{
 		return this.maze;
 	}
 	public MazeViewSource newMaze(){
-		maze = new Maze();
+		try {
+			maze = new Maze();
+		} catch (MazeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return maze;
 	// 	ATTENTION la j'ouvre a partir du fichier texte deja creer
 		// on pourrait personnaliser la hauteur largeur etc...
@@ -38,11 +48,21 @@ public class MazeController implements MazeViewController{
 	// 	ATTENTION la j'ouvre a partir du fichier texte deja creer
 	// on pourrait personnaliser la hauteur largeur etc...
 	public MazeController(){
-		maze = new Maze();
+		try {
+			maze = new Maze();
+		} catch (MazeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public MazeController(String fileName){
-		maze = new Maze(fileName);
+		try {
+			maze = new Maze(fileName);
+		} catch (MazeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

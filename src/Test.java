@@ -1,7 +1,5 @@
 import fr.enst.inf103.ui.MazeViewController;
 import fr.enst.inf103.ui.MazeWindow;
-import Dijkstra.ASet;
-import maze.Maze;
 import maze.MazeController;
 
 public class Test {
