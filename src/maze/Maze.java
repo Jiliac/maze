@@ -166,11 +166,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 			this.setBorne();
 			for (int i = 0; i < maxX; i++) {
 				for (int j = 0; j < maxY; j++) {
-					MBox m = (MBox) getVI(i, j);
-					if (m == null) {
-						m = new EBox(i, j);
-					}
-					cb.put(m.getType());
+					cb.put(((MBox) getVI(i, j)).getType());
 				}
 				cb.put('/');
 			}
@@ -268,7 +264,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	private VertexInterface getVI(int posX, int posY) {
-		VertexInterface retour = null;
+		VertexInterface retour = new EBox(posX, posY);
 
 		EBox box = new EBox(posX, posY);
 		for (VertexInterface vi : alVi) {
