@@ -7,16 +7,15 @@ import fr.enst.inf103.ui.MazeViewSource;
 public class MazeController implements MazeViewController{
 
 	// ********* implementation de MazeViewController ********
-	ASet shortestPath;
+	//ASet shortestPath;
 	public void calculateShortestPath(){
-		shortestPath = maze.getShortestPath();
+		maze.getShortestPath();
 	}
 	
 	public MazeViewSource openMaze(String fileName){
 		try {
 			maze = new Maze(fileName);
 		} catch (MazeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return maze;
@@ -51,7 +50,6 @@ public class MazeController implements MazeViewController{
 		try {
 			maze = new Maze();
 		} catch (MazeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -60,7 +58,6 @@ public class MazeController implements MazeViewController{
 		try {
 			maze = new Maze(fileName);
 		} catch (MazeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

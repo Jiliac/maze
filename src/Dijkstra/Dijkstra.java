@@ -1,4 +1,5 @@
 package Dijkstra;
+import maze.*;
 
 public class Dijkstra {
 
@@ -29,6 +30,7 @@ public class Dijkstra {
 					pi.setPoids(x, pi.getPoids(pivot) + gi.getPoids(pivot, x));
 				pivot = asi.getMin();
 				asi.add(pivot);
+				System.out.println("Sommet d'ordonnée "+ Integer.toString(((MBox) pivot).getPosX()) +"et d'abscisse"+  Integer.toString(((MBox) pivot).getPosX()));
 			}
 		}
 

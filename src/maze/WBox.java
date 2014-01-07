@@ -4,7 +4,6 @@ public class WBox extends MBox {
 
 	public WBox(int posX, int posY) {
 		super(posX, posY);
-		// TODO Auto-generated constructor stub
 	}
 
 	public boolean getPEntry(MBox mBox) {

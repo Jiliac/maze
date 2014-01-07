@@ -22,6 +22,8 @@ import Dijkstra.Pi;
 import Dijkstra.VertexInterface;
 import Dijkstra.GraphInterface;
 
+import java.util.Calendar;
+
 public class Maze implements GraphInterface, MazeViewSource {
 
 	// ************** implementation de MazeViewSource *************
@@ -92,7 +94,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		Reader r;
 		try {
 			// mise en place du reader
-			r = new FileReader("./"+fileName);
+			r = new FileReader("./" + fileName);
 			BufferedReader br = new BufferedReader(r);
 			try {
 				// on initialise
@@ -150,18 +152,17 @@ public class Maze implements GraphInterface, MazeViewSource {
 				retour = new DBox(posX, posY);
 			}
 		else {
-			throw new MazeException("erreur de caractere" + c);
+			throw new MazeException(" Caractere non recevable: " + c);
 		}
 		return retour;
 	}
 
 	// ******* sauvegarder dans un fichier texte *********
-	
-	//Nécessité d'avoir comme nom de fichier "exemple.txt" et pas "exemple".
-	
+
+	// Nécessité d'avoir comme nom de fichier "exemple.txt" et pas "exemple".
 
 	public void save(String fileName) {
-		try (FileOutputStream fis = new FileOutputStream("./"+ fileName);) {
+		try (FileOutputStream fis = new FileOutputStream("./" + fileName);) {
 			CharBuffer cb = CharBuffer.allocate(1);
 			this.setBorne();
 			for (int i = 0; i < maxX; i++) {
@@ -171,18 +172,15 @@ public class Maze implements GraphInterface, MazeViewSource {
 				cb.put('/');
 			}
 			cb.put(';');
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("Le fichier existe déjà ou ne peut être écrit.");
-		}
-		catch(BufferOverflowException e){
+		} catch (BufferOverflowException e) {
 			e.printStackTrace();
-		}
-		catch(ReadOnlyBufferException e){
+		} catch (ReadOnlyBufferException e) {
 			e.printStackTrace();
-		}
-		catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -263,6 +261,17 @@ public class Maze implements GraphInterface, MazeViewSource {
 		Pi pi = new Pi();
 		Dijkstra d = new Dijkstra(this, pi, new ASet(pi));
 		ASet retour = (ASet) d.shortestPath();
+
+		for (VertexInterface vi : alVi) {
+			//int s = Calendar.SECOND;
+			if (((MBox) vi).getType() != 'A' && ((MBox) vi).getType() != 'D') {
+				int i = ((MBox) vi).getPosX();
+				int j = ((MBox) vi).getPosY();
+				//while (Calendar.SECOND < s + 2) {}
+				this.setSymbolForBox(i, j, "D");
+			}
+		}
+
 		return retour;
 	}
 
