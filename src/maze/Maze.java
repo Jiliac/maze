@@ -4,14 +4,14 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.FileOutputStream;
+import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
+import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 
 import fr.enst.inf103.ui.MazeView;
@@ -92,7 +92,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		Reader r;
 		try {
 			// mise en place du reader
-			r = new FileReader(fileName);
+			r = new FileReader("./"+fileName);
 			BufferedReader br = new BufferedReader(r);
 			try {
 				// on initialise
@@ -127,7 +127,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void load() throws MazeException {
-		this.load("./maze.txt");
+		this.load("maze.txt");
 	}
 
 	// - - - - - - - - - auxiliaire - - - - - - - - -
@@ -161,7 +161,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	
 
 	public void save(String fileName) {
-		try (FileOutputStream fis = new FileOutputStream("./filename");) {
+		try (FileOutputStream fis = new FileOutputStream("./"+ fileName);) {
 			CharBuffer cb = CharBuffer.allocate(1);
 			this.setBorne();
 			for (int i = 0; i < maxX; i++) {
@@ -180,6 +180,9 @@ public class Maze implements GraphInterface, MazeViewSource {
 			e.printStackTrace();
 		}
 		catch(ReadOnlyBufferException e){
+			e.printStackTrace();
+		}
+		catch(IOException e){
 			e.printStackTrace();
 		}
 
