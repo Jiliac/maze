@@ -14,39 +14,31 @@ public class Pi implements PiInterface {
 		 * deux cas a distinguer 1) le cas ou on initialise vi 2) le cas ou vi a
 		 * deja un poids
 		 */
-		if (!this.isIn(vi)) {
+		if (this.isIn(vi) == null) {
 			Couple c = new Couple(vi, poids);
 			alc.add(c);
 		} else {
-			for (Couple c : alc) {
-				if (c.equal(vi)) {
-					// je fais deux fois la meme chose il y avait surement une
-					// facon de faire quelaue chose de mieux...
-					
-					/*  <YM> oui, initialiser tous les vertex dès le début avec un poids infini  </YM> */
-					
-					c.setPoids(poids);
-				}
-			}
+			isIn(vi).setPoids(poids);
+
 		}
 
 	}
-	
-	public int getPoids(VertexInterface vi){
+
+	public int getPoids(VertexInterface vi) {
 		int retour = Integer.MAX_VALUE;
-		for(Couple c : alc){
-			if(c.equal(vi))
+		for (Couple c : alc) {
+			if (c.equal(vi))
 				retour = c.getPoids();
 		}
 		return retour;
 	}
 
-	private boolean isIn(VertexInterface vi) {
-		boolean retour = false;
+	private Couple isIn(VertexInterface vi) {
+		Couple match = null;
 		for (Couple c : alc) {
 			if (c.equal(vi))
-				retour = true;
+				match = c;
 		}
-		return retour;
+		return match;
 	}
 }

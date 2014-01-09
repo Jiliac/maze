@@ -177,7 +177,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.out
-					.println("Le fichier existe deja  ou ne peut etre ecrit.");
+					.println("Le fichier existe deja ou ne peut etre ecrit.");
 		} catch (BufferOverflowException e) {
 			e.printStackTrace();
 		} catch (ReadOnlyBufferException e) {
