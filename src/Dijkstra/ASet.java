@@ -25,14 +25,13 @@ public class ASet implements AsetInterface {
 	public VertexInterface getMin(GraphInterface gi) {
 		VertexInterface retour = new EBox(-1, -1);
 		pi.setPoids(retour, Integer.MAX_VALUE);
-		
-		//je forme la liste a parcourir
-		ArrayList<VertexInterface> listParcourir= gi.getGraph();
-		for(VertexInterface vi : alVi){
+
+		// je forme la liste a parcourir
+		ArrayList<VertexInterface> listParcourir = gi.getGraph();
+		for (VertexInterface vi : alVi) {
 			listParcourir.remove(vi);
 		}
-		
-		
+
 		for (VertexInterface vi : listParcourir) {
 			if (pi.getPoids(vi) < pi.getPoids(retour)) {
 				retour = vi;
@@ -44,14 +43,13 @@ public class ASet implements AsetInterface {
 	public void add(VertexInterface vi) {
 		alVi.add(vi);
 	}
-	
-	public ArrayList<VertexInterface> getSommet(){
+
+	public ArrayList<VertexInterface> getSommet() {
 		return this.alVi;
 	}
-	
-	public int size(){
+
+	public int size() {
 		return alVi.size();
 	}
-	
 
 }
