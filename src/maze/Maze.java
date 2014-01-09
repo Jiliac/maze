@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
@@ -132,7 +133,39 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void load() throws MazeException {
-		this.load("maze.txt");
+		this.load2("maze.txt");
+	}
+	
+	
+	
+	public void load2(String fileName) throws MazeException {
+		try (FileInputStream fis = new FileInputStream("./" + fileName);) {
+			CharBuffer cb = CharBuffer.allocate(1);
+			this.setBorne();
+			int i=0;
+			int j=0;
+			char c='c';
+			while(c!=';'){
+				c='c';
+				while(c!='/' && c!=';'){
+					grid.add(this.createBox(i, j, c=cb.get()));
+					i++;
+				}
+				j++;
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out
+					.println("Le fichier est introuvable.");
+		} catch (BufferOverflowException e) {
+			e.printStackTrace();
+		} catch (ReadOnlyBufferException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	// - - - - - - - - - auxiliaire - - - - - - - - -
