@@ -15,14 +15,14 @@ public class Dijkstra {
 
 	public AsetInterface shortestPath() {
 		VertexInterface r, pivot;
-		r = gi.getDeparture();
-		pivot = r;
-		pi.setPoids(r, 0);
-		asi.add(r);
 		for (VertexInterface x : gi.getGraph()) {
 			pi.setPoids(x, (int) Integer.MAX_VALUE / 2);
 			 //je divise par 2 parce que Integer.MAX_VALUE+1=Integer.MIN_VALUE
 		}
+		r = gi.getDeparture();
+		pivot = r;
+		pi.setPoids(r, 0);
+		asi.add(r);
 
 		for (VertexInterface x : gi.getGraph()) {
 			if (!asi.isInAset(x) && gi.isPrevious(pivot, x) && !x.isArrival()) {
@@ -30,7 +30,7 @@ public class Dijkstra {
 					pi.setPoids(x, pi.getPoids(pivot) + gi.getPoids(pivot, x));
 				pivot = asi.getMin();
 				asi.add(pivot);
-				System.out.println("Sommet d'ordonnee "+ Integer.toString(((MBox) pivot).getPosX()) +" et d'abscisse "+  Integer.toString(((MBox) pivot).getPosX()));
+				System.out.println("Sommet d'ordonance "+ Integer.toString(((MBox) pivot).getPosX()) +" et d'abscisse "+  Integer.toString(((MBox) pivot).getPosX()));
 			}
 		}
 
