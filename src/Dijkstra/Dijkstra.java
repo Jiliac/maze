@@ -47,7 +47,7 @@ public class Dijkstra {
 								pi.getPoids(pivot) + gi.getPoids(pivot, x));
 
 					}
-					pivot = asi.getMin();
+					pivot = asi.getMin(gi);
 					asi.add(pivot);
 					System.out.println("Sommet d'ordonnee "
 							+ Integer.toString(((MBox) pivot).getPosX())
