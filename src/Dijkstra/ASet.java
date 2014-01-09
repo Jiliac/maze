@@ -40,4 +40,10 @@ public class ASet implements AsetInterface {
 	public ArrayList<VertexInterface> getSommet(){
 		return this.alVi;
 	}
+	
+	public int size(){
+		return alVi.size();
+	}
+	
+
 }

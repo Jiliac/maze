@@ -73,10 +73,10 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	// ************* constructreurs ***************
 
-	private ArrayList<VertexInterface> alVi;
+	private ArrayList<VertexInterface> grid;
 
-	public Maze(ArrayList<VertexInterface> alVi) {
-		this.alVi = alVi;
+	public Maze(ArrayList<VertexInterface> grid) {
+		this.grid = grid;
 		this.setPrevious();
 	}
 
@@ -93,7 +93,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// ************* constructeur a partir d'un fichier texte **********
 
 	public void load(String fileName) throws MazeException {
-		alVi = new ArrayList<VertexInterface>();
+		grid = new ArrayList<VertexInterface>();
 		Reader r;
 		try {
 			// mise en place du reader
@@ -109,7 +109,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 					int x = 0;
 					while (c != '/' && c != ';') {
 						System.out.println(c + " x= " + x + " y= " + y + '.');
-						alVi.add(this.createBox(x, y, c));
+						grid.add(this.createBox(x, y, c));
 						c = (char) br.read();
 						x++;
 					}
@@ -143,12 +143,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 			retour = new WBox(posX, posY);
 		else if (c == 'E') { //variable deja initialise
 		} else if (c == 'A') {
-			if (alVi.indexOf(new ABox(0, 0)) != -1)
+			if (grid.indexOf(new ABox(0, 0)) != -1)
 				throw new MazeException("Deja une case d'arrivee!");
 			else
 				retour = new ABox(posX, posY);
 		} else if (c == 'D') {
-			if (alVi.indexOf(new DBox(0, 0)) != -1)
+			if (grid.indexOf(new DBox(0, 0)) != -1)
 				throw new MazeException("Deja une case de depart!");
 			else
 				retour = new DBox(posX, posY);
@@ -200,7 +200,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		maxX = 0;
 		maxY = 0;
 
-		for (VertexInterface vi : alVi) {
+		for (VertexInterface vi : grid) {
 			if (vi.getPosX() > maxX)
 				maxX = vi.getPosX();
 			if (vi.getPosY() > maxY)
@@ -208,7 +208,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		}
 	}
 
-	private void setPrevious() {
+	public void setPrevious() {
 		this.setBorne();
 
 		for (int posX = 1; posX < maxX; posX++) {
@@ -239,7 +239,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	public VertexInterface getDeparture() {
 		MBox retour = null;
-		for (VertexInterface vi : alVi) {
+		for (VertexInterface vi : grid) {
 			MBox box = (MBox) vi;
 			if (box.getType() == 'D')
 				retour = box;
@@ -249,7 +249,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public ArrayList<VertexInterface> getGraph() {
-		return alVi;
+		return grid;
 	}
 
 	public int getPoids(VertexInterface x, VertexInterface y) {
@@ -273,7 +273,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		VertexInterface retour = new EBox(posX, posY);
 
 		EBox box = new EBox(posX, posY);
-		for (VertexInterface vi : alVi) {
+		for (VertexInterface vi : grid) {
 			if (vi.equal(box))
 				retour = vi;
 		}
@@ -282,7 +282,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	private void setVI(int posX, int posY, VertexInterface x) {
 		EBox box = new EBox(posX, posY);
-		for (VertexInterface vi : alVi) {
+		for (VertexInterface vi : grid) {
 			if (vi.equal(box))
 				vi = x;
 		}
