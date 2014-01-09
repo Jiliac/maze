@@ -50,6 +50,7 @@ public class Dijkstra {
 							+ " et d'abscisse "
 							+ Integer.toString(((MBox) pivot).getPosX()));
 					if (pivot.isArrival()) {
+						System.out.println("J'ai trouve la sortie!");
 						done_win = true;
 					}
 				}
@@ -62,6 +63,7 @@ public class Dijkstra {
 				count++;
 			}
 			if(count==2){
+				System.out.println("Je suis coince à tout jamais dans ce labyrinthe la!");
 				done_lose=true;
 			}
 		}
