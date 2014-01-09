@@ -58,6 +58,7 @@ public abstract class MBox implements VertexInterface {
 			if (fils.equal(vi))
 				retour = true;
 		}
+		
 		return retour;
 	}
 

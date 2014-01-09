@@ -35,7 +35,10 @@ public class Dijkstra {
 		while (done_win == false && done_lose == false) {
 			
 			for (VertexInterface x : gi.getGraph()) {
+				System.out.println("test01");
+				System.out.println(gi.isPrevious(pivot, x));
 				if (!asi.isInAset(x) && gi.isPrevious(pivot, x)) {
+					System.out.println("test02");
 
 					if (pi.getPoids(pivot) + gi.getPoids(pivot, x) < pi
 							.getPoids(x)) {
