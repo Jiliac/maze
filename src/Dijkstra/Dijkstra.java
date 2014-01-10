@@ -109,4 +109,45 @@ public class Dijkstra {
 		}
 		return asi;
 	}
+	
+	public ASetInterface court(){
+		
+	
+		gi.setPrevious();
+		
+		VertexInterface r, pivot;
+		
+		for (VertexInterface x : gi.getGraph()) {
+			pi.setPoids(x, (int) Integer.MAX_VALUE / 2);
+		}
+		
+		r = gi.getDeparture();
+		pivot = r;
+		pi.setPoids(r, 0);
+		asi.add(r);
+
+		boolean done_win = false;
+		boolean done_lose = false;
+		int size = -1;
+		int count = 0;
+		
+		ArrayList<VertexInterface> unreached = new ArrayList<VertexInterface>();
+
+		for (VertexInterface vi : this.gi.getGraph()) {
+			unreached.add(vi);
+		}
+		
+		while (done_win == false && done_lose == false) {
+			
+		int lengh = asi.size();
+			
+			for (int iterator = 0; iterator < lengh; iterator++) {
+				
+				
+			}
+		
+	}
+	}
+	
+	
 }

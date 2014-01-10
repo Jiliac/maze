@@ -15,7 +15,7 @@ public class Pi implements PiInterface {
 		 * deja un poids
 		 */
 		if (this.isIn(vi) == null) {
-			Couple c = new Couple(vi, poids);
+			Couple c = new Couple(vi, poids, null);
 			alc.add(c);
 		} else {
 			isIn(vi).setPoids(poids);
