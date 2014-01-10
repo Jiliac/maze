@@ -82,18 +82,18 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public Maze() throws MazeException {
-		this.load();
+		this.load2("maze.txt");
 		this.setPrevious();
 	}
 
 	public Maze(String fileName) throws MazeException {
-		this.load(fileName);
+		this.load2(fileName);
 		this.setPrevious();
 	}
 
 	// ************* constructeur a partir d'un fichier texte **********
 
-	public void load(String fileName) throws MazeException {
+	/*public void load(String fileName) throws MazeException {
 		grid = new ArrayList<VertexInterface>();
 		Reader r;
 		try {
@@ -130,14 +130,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 		// on contruit les relations de parente
 		this.setPrevious();
-	}
+	}*/
 
 	public void load() throws MazeException {
 		this.load2("maze.txt");
 	}
-	
-	
-	
+		
 	public void load2(String fileName) throws MazeException {
 		try (FileInputStream fis = new FileInputStream("./" + fileName);) {
 			CharBuffer cb = CharBuffer.allocate(1);
