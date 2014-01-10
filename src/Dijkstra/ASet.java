@@ -12,6 +12,8 @@ public class ASet implements AsetInterface {
 		alVi = new ArrayList<VertexInterface>();
 		this.pi = pi;
 	}
+	
+	// *************** formation de liste ***********************
 
 	public boolean isInAset(VertexInterface vi) {
 		boolean retour = false;
@@ -22,6 +24,8 @@ public class ASet implements AsetInterface {
 		return retour;
 	}
 
+	// *************** recherche dans la liste ***************
+	
 	public VertexInterface getMin(GraphInterface gi) {
 		VertexInterface retour = new EBox(-1, -1);
 		pi.setPoids(retour, Integer.MAX_VALUE);
@@ -39,6 +43,8 @@ public class ASet implements AsetInterface {
 		}
 		return retour;
 	}
+	
+	// *********** methodes simples ***********
 
 	public void add(VertexInterface vi) {
 		alVi.add(vi);
