@@ -144,7 +144,7 @@ public class Dijkstra {
 				Triple x = unreached.get(iterator);
 
 				if (x.getVi().isPrevious(pivot.getVi())
-						&& unreached.contains(x) && !x.getFather().equal(pivot) ) {
+						&& unreached.contains(x) && !x.getFather().equal(pivot) && !(x.getVi() instanceof WBox) ) {
 
 					int ancien = x.getPoids();
 					int nouveau = pivot.getPoids() + 1;
