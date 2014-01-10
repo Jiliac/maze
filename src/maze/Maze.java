@@ -76,24 +76,26 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	private ArrayList<VertexInterface> grid;
 
+/*
 	public Maze(ArrayList<VertexInterface> grid) {
 		this.grid = grid;
 		this.setPrevious();
 	}
+*/
 
 	public Maze() throws MazeException {
-		this.load2("maze.txt");
-		this.setPrevious();
+		this.load("maze.txt");
+		//this.setPrevious();
 	}
 
 	public Maze(String fileName) throws MazeException {
-		this.load2(fileName);
-		this.setPrevious();
+		this.load();
+		//this.setPrevious();
 	}
 
 	// ************* constructeur a partir d'un fichier texte **********
 
-	/*public void load(String fileName) throws MazeException {
+	public void load(String fileName) throws MazeException {
 		grid = new ArrayList<VertexInterface>();
 		Reader r;
 		try {
@@ -129,15 +131,15 @@ public class Maze implements GraphInterface, MazeViewSource {
 		}
 
 		// on contruit les relations de parente
-		this.setPrevious();
-	}*/
+		//this.setPrevious();
+	}
 
 	public void load() throws MazeException {
-		this.load2("maze.txt");
+		this.load("maze.txt");
 	}
 		
 	public void load2(String fileName) throws MazeException {
-		try (FileInputStream fis = new FileInputStream("./" + fileName);) {
+		try (FileInputStream fis = new FileInputStream(fileName);) {
 			CharBuffer cb = CharBuffer.allocate(1);
 			this.setBorne();
 			int i=0;
@@ -246,10 +248,10 @@ public class Maze implements GraphInterface, MazeViewSource {
 			for (int posY = 1; posY < maxY; posY++) {
 				VertexInterface box = this.getVI(posX, posY);
 
-				box.addFils(this.getVI(posX - 1, posY - 1));
-				box.addFils(this.getVI(posX + 1, posY - 1));
-				box.addFils(this.getVI(posX - 1, posY + 1));
-				box.addFils(this.getVI(posX + 1, posY + 1));
+				box.addFils(this.getVI(posX , posY - 1));
+				box.addFils(this.getVI(posX , posY + 1));
+				box.addFils(this.getVI(posX - 1, posY));
+				box.addFils(this.getVI(posX + 1, posY));
 			}
 		}
 	}

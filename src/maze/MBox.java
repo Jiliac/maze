@@ -6,8 +6,8 @@ import Dijkstra.VertexInterface;
 
 public abstract class MBox implements VertexInterface {
 
-	private final int posX;
-	private final int posY;
+	private int posX;
+	private int posY;
 
 	// ****** constructeurs ***********
 
