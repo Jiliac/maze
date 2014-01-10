@@ -27,21 +27,24 @@ public abstract class MBox implements VertexInterface {
 	// ********** les box sont des vertex **********
 
 	public boolean equal(VertexInterface x) {
-		boolean retour;
 		if (this.posX == x.getPosX() && this.posY == x.getPosY())
-			retour = true;
+			return true;
 		else
-			retour = false;
-		return retour;
+			return false;
 	}
 
 	public boolean isArrival() {
-		boolean retour;
 		if (this.getType() == 'A')
-			retour = true;
+			return true;
 		else
-			retour = false;
-		return retour;
+			return false;
+	}
+	
+	public boolean isDeparture() {
+		if (this.getType() == 'D')
+			return true;
+		else
+			return false;
 	}
 
 	// ********** gestion de parente ********

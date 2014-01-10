@@ -8,6 +8,8 @@ public interface VertexInterface {
 	public boolean equal(VertexInterface vi);
 
 	public boolean isArrival();
+	
+	public boolean isDeparture();
 
 	public void addFils(VertexInterface vi);
 

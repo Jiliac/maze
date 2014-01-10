@@ -3,10 +3,10 @@ package Dijkstra;
 import java.util.ArrayList;
 
 public class Pi implements PiInterface {
-	private ArrayList<Couple> alc;
+	private ArrayList<Triple> alc;
 
 	public Pi() {
-		alc = new ArrayList<Couple>();
+		alc = new ArrayList<Triple>();
 	}
 
 	public void setPoids(VertexInterface vi, int poids) {
@@ -15,8 +15,8 @@ public class Pi implements PiInterface {
 		 * deja un poids
 		 */
 		if (this.isIn(vi) == null) {
-			Couple c = new Couple(vi, poids, null);
-			alc.add(c);
+			Triple t = new Triple(vi, poids, null);
+			alc.add(t);
 		} else {
 			isIn(vi).setPoids(poids);
 
@@ -26,18 +26,18 @@ public class Pi implements PiInterface {
 
 	public int getPoids(VertexInterface vi) {
 		int retour = Integer.MAX_VALUE;
-		for (Couple c : alc) {
-			if (c.equal(vi))
-				retour = c.getPoids();
+		for (Triple t : alc) {
+			if (t.getVi().equal(vi))
+				retour = t.getPoids();
 		}
 		return retour;
 	}
 
-	private Couple isIn(VertexInterface vi) {
-		Couple match = null;
-		for (Couple c : alc) {
-			if (c.equal(vi))
-				match = c;
+	private Triple isIn(VertexInterface vi) {
+		Triple match = null;
+		for (Triple t : alc) {
+			if (t.getVi().equal(vi))
+				match = t;
 		}
 		return match;
 	}
