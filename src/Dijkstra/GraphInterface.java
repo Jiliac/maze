@@ -13,4 +13,6 @@ public interface GraphInterface {
 	public ArrayList<VertexInterface> getGraph();
 
 	public int getPoids(VertexInterface x, VertexInterface y);
+	
+	public int getSizeMax();
 }

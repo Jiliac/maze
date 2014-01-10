@@ -110,17 +110,18 @@ public class Dijkstra {
 		return asi;
 	}
 
-	public ArrayList<VertexInterface> shortestPath() throws DijkstraException {
+	public ArrayList<VertexInterface> shortestPath() {
 
 		gi.setPrevious();
 
 		ArrayList<Triple> unreached = new ArrayList<Triple>();
 		
 		Triple r = null ;
+		Triple god = new Triple(null, 10000, null);
 
 		for (VertexInterface vi : this.gi.getGraph()) {
 			if(!vi.isDeparture())
-				unreached.add(new Triple(vi, (int) Integer.MAX_VALUE / 2, null));
+				unreached.add(new Triple(vi, (int) Integer.MAX_VALUE / 2, god));
 			else
 				r=new Triple(vi,0,null);
 		}
@@ -128,12 +129,6 @@ public class Dijkstra {
 		System.out.println("Depart a la racine de poids: "+r.getPoids()+" !");
 		
 		Triple pivot=r;
-
-		if (unreached.remove(r) == false) {
-			throw new DijkstraException("Il n'y a pas de case depart.");
-		} else {
-			unreached.remove(r);
-		}
 
 		boolean done_win = false;
 		boolean done_lose = false;
@@ -149,7 +144,7 @@ public class Dijkstra {
 				Triple x = unreached.get(iterator);
 
 				if (x.getVi().isPrevious(pivot.getVi())
-						&& unreached.contains(x) && !x.getFather().equal(pivot)) {
+						&& unreached.contains(x) && !x.getFather().equal(pivot) ) {
 
 					int ancien = x.getPoids();
 					int nouveau = pivot.getPoids() + 1;
@@ -197,16 +192,23 @@ public class Dijkstra {
 		}
 
 		ArrayList<VertexInterface> chemin = new ArrayList<VertexInterface>();
+		VertexInterface[] tab=new VertexInterface[pivot.getPoids()+1];
 
 		if (done_win) {
 			Triple z = pivot;
-			for (int p = 0; p <= pivot.getPoids(); p++) {
-				chemin.set(pivot.getPoids() - p, z.getVi());
+			for (int p = pivot.getPoids(); p>=0; p=p-1) {
+				tab[p]=z.getVi();
+				//chemin.add(p, z.getVi());
 				z = z.getFather();
 			}
 		} else {
 			chemin = null;
 		}
+		
+		for (int i = 0; i < tab.length; i++) {
+			chemin.add(tab[i]);
+			}
+		
 		return chemin;
 	}
 }

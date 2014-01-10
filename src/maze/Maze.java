@@ -228,6 +228,11 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// ************ gestion de parente ***************
 
 	private int maxX, maxY;
+	
+	public int getSizeMax(){
+		this.setBorne();
+		return (maxX+1)*(maxY+1);
+	}
 
 	private void setBorne() {
 		maxX = 0;
@@ -294,12 +299,11 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	// ******** getter *********
 
-	public ASet getShortestPath() {
+	public ArrayList<VertexInterface> getShortestPath() {
 		Pi pi = new Pi();
 		Dijkstra d = new Dijkstra(this, pi, new ASet(pi));
-		ASet retour = (ASet) d.shortestPath();
-
-		return retour;
+		ArrayList<VertexInterface> chemin =d.shortestPath();
+		return chemin;
 	}
 
 	private VertexInterface getVI(int posX, int posY) {

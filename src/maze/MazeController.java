@@ -4,15 +4,22 @@ import Dijkstra.ASet;
 import Dijkstra.VertexInterface;
 import fr.enst.inf103.ui.MazeViewController;
 import fr.enst.inf103.ui.MazeViewSource;
+import java.util.ArrayList;
 
 public class MazeController implements MazeViewController{
 
 	// ********* implementation de MazeViewController ********
 	//ASet shortestPath;
 	public void calculateShortestPath(){
-		ASet aSet = maze.getShortestPath();
-		for(VertexInterface vi : aSet.getSommet())
-			vi.setInShortestPath(true);
+		int compteur=0;
+		for(VertexInterface vi : maze.getShortestPath())
+			if(vi==null){
+				System.out.println("Null "+compteur+" fois.");
+				compteur++;
+			}
+		
+			else{
+			vi.setInShortestPath(true);}
 		//ca marche si on utilise ca qu'une seule fois mais ca ne marcherait pas si on doit changer les cases...
 			
 	}
