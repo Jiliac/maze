@@ -82,12 +82,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public Maze() throws MazeException {
-		this.load2("maze.txt");
+		this.load("maze.txt");
 		this.setPrevious();
 	}
 
 	public Maze(String fileName) throws MazeException {
-		this.load2(fileName);
+		this.load(fileName);
 		this.setPrevious();
 	}
 
@@ -98,7 +98,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		Reader r;
 		try {
 			// mise en place du reader
-			r = new FileReader("./" + fileName);
+			r = new FileReader(fileName);
 			BufferedReader br = new BufferedReader(r);
 			try {
 				// on initialise

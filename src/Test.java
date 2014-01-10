@@ -6,8 +6,7 @@ public class Test {
 	public static void main(String[] arg0) {
 		MazeViewController mazeController = new MazeController("maze.txt");
 		MazeWindow mazeWindow = new MazeWindow("My awesome labyrinth", mazeController) ;
-		System.out.println("test de modification12345");
-		mazeController.calculateShortestPath();
+		System.out.println("test de modification");
 		
 	}
 }
