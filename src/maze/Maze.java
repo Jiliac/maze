@@ -93,7 +93,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	// ************* constructeur a partir d'un fichier texte **********
 
-	/*public void load(String fileName) throws MazeException {
+	public void load(String fileName) throws MazeException {
 		grid = new ArrayList<VertexInterface>();
 		Reader r;
 		try {
@@ -130,42 +130,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 		// on contruit les relations de parente
 		this.setPrevious();
-	}*/
+	}
 
 	public void load() throws MazeException {
-		this.load2("maze.txt");
+		this.load("maze.txt");
 	}
-		
-	public void load2(String fileName) throws MazeException {
-		try (FileInputStream fis = new FileInputStream("./" + fileName);) {
-			CharBuffer cb = CharBuffer.allocate(1);
-			this.setBorne();
-			int i=0;
-			int j=0;
-			char c='c';
-			while(c!=';'){
-				c='c';
-				while(c!='/' && c!=';'){
-					grid.add(this.createBox(i, j, c=cb.get()));
-					i++;
-				}
-				j++;
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out
-					.println("Le fichier est introuvable.");
-		} catch (BufferOverflowException e) {
-			e.printStackTrace();
-		} catch (ReadOnlyBufferException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
+	
 	// - - - - - - - - - auxiliaire - - - - - - - - -
 
 	private MBox createBox(int posX, int posY, char c) throws MazeException {

@@ -1,6 +1,8 @@
 package Dijkstra;
 
-import maze.*;
+import java.util.ArrayList;
+
+
 
 public class Dijkstra {
 
@@ -25,9 +27,27 @@ public class Dijkstra {
 
 		int n = gi.getGraph().size();
 		for (int j = 1; j < n; j++) {
-			
+			for (VertexInterface y : this.removeNonPreviousVertex(asi,pivot)){
+				// le poids de l'arc p(pivot,y) est forcement 1 puisaue le test de parente a deja ete fait
+				int futurPoidsY = pi.getPoids(y) + 1;
+				if(futurPoidsY < pi.getPoids(y)){
+					pi.setPoids(y, futurPoidsY);
+					//instruction du pere de y... machin...
+				}
+				pivot = asi.getMin(gi);
+				asi.add(pivot);
+			}
 		}
 
-		return null;
+		return asi;
+	}
+	
+	private ArrayList<VertexInterface> removeNonPreviousVertex(AsetInterface asi, VertexInterface pivot){
+		ArrayList<VertexInterface> retour = new ArrayList<VertexInterface>() , nonASetCollection = asi.removeAlVi(this.gi);
+		for(VertexInterface vi : nonASetCollection){
+			if(pivot.isPrevious(vi))
+				retour.add(vi);
+		}
+		return retour;
 	}
 }

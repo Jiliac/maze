@@ -15,6 +15,15 @@ public class ASet implements AsetInterface {
 	
 	// *************** formation de liste ***********************
 
+	public ArrayList<VertexInterface> removeAlVi(GraphInterface gi){
+		ArrayList<VertexInterface> retour = gi.getGraph();
+		for (VertexInterface vi : this.alVi){
+			retour.remove(vi);
+		}
+		return retour;
+	}
+	
+	// methode inutile mtn, non?
 	public boolean isInAset(VertexInterface vi) {
 		boolean retour = false;
 		for (VertexInterface x : alVi) {
@@ -30,11 +39,7 @@ public class ASet implements AsetInterface {
 		VertexInterface retour = new EBox(-1, -1);
 		pi.setPoids(retour, Integer.MAX_VALUE);
 
-		// je forme la liste a parcourir
-		ArrayList<VertexInterface> listParcourir = gi.getGraph();
-		for (VertexInterface vi : alVi) {
-			listParcourir.remove(vi);
-		}
+		ArrayList<VertexInterface> listParcourir = this.removeAlVi(gi);
 
 		for (VertexInterface vi : listParcourir) {
 			if (pi.getPoids(vi) < pi.getPoids(retour)) {
@@ -44,7 +49,7 @@ public class ASet implements AsetInterface {
 		return retour;
 	}
 	
-	// *********** methodes simples ***********
+	// ************** methodes simples **************
 
 	public void add(VertexInterface vi) {
 		alVi.add(vi);
