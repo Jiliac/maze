@@ -265,14 +265,14 @@ public class Maze implements GraphInterface, MazeViewSource {
 	public void setPrevious() {
 		this.setBorne();
 
-		for (int posX = 0; posX < maxX; posX++) {
-			for (int posY = 0; posY < maxY; posY++) {
+		for (int posX = 0; posX <= maxX; posX++) {
+			for (int posY = 0; posY <= maxY; posY++) {
 				VertexInterface box = this.getVI(posX, posY);
 
-				box.addFils(this.getVI(posX, (posY - 1<0)?0:posY-1));
-				box.addFils(this.getVI(posX, posY + 1));
-				box.addFils(this.getVI((posX - 1<0)?0:posX-1, posY));
-				box.addFils(this.getVI(posX + 1, posY));
+				box.addFils(this.getVI(posX, (posY - 1<0)?0:(posY-1)));
+				box.addFils(this.getVI(posX, (posY + 1>maxY)?maxY:posY+1));
+				box.addFils(this.getVI((posX - 1<0)?0:(posX-1), posY));
+				box.addFils(this.getVI((posX + 1>maxX)?maxX:(posX+1), posY));
 			}
 		}
 	}
