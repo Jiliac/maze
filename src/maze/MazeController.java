@@ -50,7 +50,6 @@ public class MazeController implements MazeViewController {
 		try {
 			maze = new Maze();
 		} catch (MazeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return maze;

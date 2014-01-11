@@ -41,21 +41,32 @@ public class Maze implements GraphInterface, MazeViewSource {
 		String str = "" + c;
 
 		// pour le shortestPath
-		if (str == "E" && box.isInShortestPath())
+		if (str == "E" && box.isInShortestPath()==true)
 			str = "*";
 
 		return str;
 	}
 
 	public void setSymbolForBox(int row, int column, String str) {
-		if (str == "A")
-			this.setVI(row, column, new ABox(row, column));
-		else if (str == "E")
-			this.setVI(row, column, new EBox(row, column));
-		else if (str == "W")
-			this.setVI(row, column, new WBox(row, column));
-		else if (str == "D")
-			this.setVI(row, column, new DBox(row, column));
+		
+		switch(str){
+			case "A":
+				this.setVI(row, column, new ABox(row, column));
+				break;
+			
+			case "E":
+				this.setVI(row, column, new EBox(row, column));
+				break;
+				
+			case "W":
+				this.setVI(row, column, new WBox(row, column));
+				break;
+				
+			case "D":
+				this.setVI(row, column, new DBox(row, column));
+				break;
+		}
+	
 	}
 
 	public boolean drawMaze(Graphics g, MazeView mazeView) {

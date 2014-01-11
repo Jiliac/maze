@@ -1,9 +1,12 @@
 package maze;
 
 public class EBox extends MBox {
+	
+	private char type;
 
 	public EBox(int posX, int posY) {
 		super(posX, posY);
+		type='E';
 	}
 
 	public boolean getPEntry(MBox mBox) {
@@ -15,6 +18,11 @@ public class EBox extends MBox {
 	}
 
 	public char getType() {
-		return 'E';
+		return this.type;
 	}
+	
+	public void setType(){
+		type='*';
+	}
+	
 }
