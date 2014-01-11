@@ -8,18 +8,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
 import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
-
 import fr.enst.inf103.ui.MazeView;
 import fr.enst.inf103.ui.MazeViewSource;
-import Dijkstra.ASet;
 import Dijkstra.Dijkstra;
-import Dijkstra.Pi;
 import Dijkstra.VertexInterface;
 import Dijkstra.GraphInterface;
 
@@ -48,21 +44,22 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void setSymbolForBox(int row, int column, String str) {
+		char c = str.charAt(0);
 
-		switch (str) {
-		case "A":
+		switch (c) {
+		case 'A':
 			this.setVI(row, column, new ABox(row, column));
 			break;
 
-		case "E":
+		case 'E':
 			this.setVI(row, column, new EBox(row, column));
 			break;
 
-		case "W":
+		case 'W':
 			this.setVI(row, column, new WBox(row, column));
 			break;
 
-		case "D":
+		case 'D':
 			this.setVI(row, column, new DBox(row, column));
 			break;
 		}
@@ -92,13 +89,23 @@ public class Maze implements GraphInterface, MazeViewSource {
 	 * this.setPrevious(); }
 	 */
 
-	public Maze() throws MazeException {
-		this.load("maze.txt");
+	public Maze() {
+		try {
+			this.load("maze.txt");
+		} catch (MazeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// this.setPrevious();
 	}
 
-	public Maze(String fileName) throws MazeException {
-		this.load();
+	public Maze(String fileName) {
+		try {
+			this.load(fileName);
+		} catch (MazeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// this.setPrevious();
 	}
 
@@ -120,7 +127,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 				while (c != ';') {
 					int x = 0;
 					while (c != '/' && c != ';') {
-						System.out.println(c + " x= " + x + " y= " + y + '.');
 						grid.add(this.createBox(x, y, c));
 						c = (char) br.read();
 						x++;
@@ -190,7 +196,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 			e.printStackTrace();
 			System.out.println("Le fichier existe deja ou ne peut etre ecrit.");
 		}
-		
+
 		try {
 			CharBuffer cb = CharBuffer.allocate(1);
 			this.setBorne();
@@ -211,7 +217,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	}
 
 	public void save() {
-		this.save("maze_backup.txt");
+		this.save("maze.txt");
 	}
 
 	// ************ gestion de parente ***************
@@ -291,9 +297,18 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	private void setVI(int posX, int posY, VertexInterface x) {
 		EBox box = new EBox(posX, posY);
+		int indexOfBox = -1;
+
 		for (VertexInterface vi : grid) {
 			if (vi.equal(box))
-				vi = x;
+				indexOfBox = grid.indexOf(vi);
+		}
+		if (indexOfBox == -1)
+			System.out.println("Ces coordonnées n'existent pas");
+		else {
+			grid.remove(indexOfBox);
+			grid.add(x);
+			// faudrait p-e refaire les liens de parente de cette box??
 		}
 	}
 }

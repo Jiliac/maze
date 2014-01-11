@@ -1,6 +1,5 @@
 package maze;
 
-import Dijkstra.ASet;
 import Dijkstra.VertexInterface;
 import fr.enst.inf103.ui.MazeViewController;
 import fr.enst.inf103.ui.MazeViewSource;
@@ -30,11 +29,7 @@ public class MazeController implements MazeViewController {
 	}
 
 	public MazeViewSource openMaze(String fileName) {
-		try {
-			maze = new Maze(fileName);
-		} catch (MazeException e) {
-			e.printStackTrace();
-		}
+		maze = new Maze(fileName);
 		return maze;
 	}
 
@@ -47,11 +42,8 @@ public class MazeController implements MazeViewController {
 	}
 
 	public MazeViewSource newMaze() {
-		try {
-			maze = new Maze();
-		} catch (MazeException e) {
-			e.printStackTrace();
-		}
+		maze = new Maze();
+		
 		return maze;
 		// ATTENTION la j'ouvre a partir du fichier texte deja creer
 		// on pourrait personnaliser la hauteur largeur etc...
@@ -64,19 +56,12 @@ public class MazeController implements MazeViewController {
 	// ATTENTION la j'ouvre a partir du fichier texte deja creer
 	// on pourrait personnaliser la hauteur largeur etc...
 	public MazeController() {
-		try {
-			maze = new Maze();
-		} catch (MazeException e) {
-			e.printStackTrace();
-		}
+		maze = new Maze();
+		
 	}
 
 	public MazeController(String fileName) {
-		try {
-			maze = new Maze(fileName);
-		} catch (MazeException e) {
-			e.printStackTrace();
-		}
+		maze = new Maze(fileName);
 	}
 
 }

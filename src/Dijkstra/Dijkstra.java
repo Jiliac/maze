@@ -22,14 +22,8 @@ public class Dijkstra {
 		for (VertexInterface vi : this.gi.getGraph()) {
 			if (vi.isDeparture() == false) {
 				unreached.add(new Triple(vi, (int) Integer.MAX_VALUE / 2, god));
-				System.out.println("Initialisation du sommet non-atteint: ("
-						+ Integer.toString(vi.getPosX()) + ", "
-						+ Integer.toString(vi.getPosY()) + ")");
 			} else {
 				r = new Triple(vi, 0, null);
-				System.out.println("J'ai un depart : ("
-						+ Integer.toString(vi.getPosX()) + ", "
-						+ Integer.toString(vi.getPosY()) + ")");
 			}
 		}
 
