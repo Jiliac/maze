@@ -144,10 +144,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 		// this.setPrevious();
 	}
 
-	public void load() throws MazeException {
-		this.load("maze.txt");
-	}
-
 	// - - - - - - - - - auxiliaire - - - - - - - - -
 
 	private MBox createBox(int posX, int posY, char c) throws MazeException {
@@ -218,11 +214,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// ************ gestion de parente ***************
 
 	private int maxX, maxY;
-
-	public int getSizeMax() {
-		this.setBorne();
-		return (maxX + 1) * (maxY + 1);
-	}
 
 	private void setBorne() {
 		maxX = 0;

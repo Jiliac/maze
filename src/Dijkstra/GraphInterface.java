@@ -9,6 +9,4 @@ public interface GraphInterface {
 	public boolean isPrevious(VertexInterface pere, VertexInterface fils);
 
 	public ArrayList<VertexInterface> getGraph();
-	
-	public int getSizeMax();
 }

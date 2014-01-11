@@ -1,4 +1,3 @@
-import maze.Maze;
 import maze.MazeController;
 import fr.enst.inf103.ui.MazeViewController;
 import fr.enst.inf103.ui.MazeWindow;

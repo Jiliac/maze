@@ -6,12 +6,7 @@ public class DBox extends EBox {
 		super(posX, posY);
 	}
 
-	public boolean getPEntry(MBox mBox) {
-		return false;
-	}
-
 	public char getType() {
 		return 'D';
 	}
-
 }

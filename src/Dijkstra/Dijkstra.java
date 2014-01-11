@@ -1,8 +1,6 @@
 package Dijkstra;
 
 import java.util.ArrayList;
-import maze.*;
-
 public class Dijkstra {
 
 	private GraphInterface gi;

@@ -18,10 +18,6 @@ public abstract class MBox implements VertexInterface {
 
 	// ********** definition des box *************
 
-	public abstract boolean getPEntry(MBox mBox);
-
-	public abstract boolean getPExit(MBox mBox);
-
 	public abstract char getType();
 
 	// ********** les box sont des vertex **********
