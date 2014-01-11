@@ -158,10 +158,12 @@ public class Dijkstra {
 					if (nouveau < ancien) {
 						x.setPoids(nouveau);
 						x.setFather(pivot);
+						/*
 						System.out.println("Le nouveau poids du sommet ("
 								+ Integer.toString(x.getVi().getPosX()) + ", "
 								+ Integer.toString(x.getVi().getPosY())
 								+ ") est " + Integer.toString(nouveau));
+						*/
 					}
 				}
 
@@ -215,7 +217,12 @@ public class Dijkstra {
 
 			for (int i = 0; i < tab.length; i++) {
 				chemin.add(tab[i]);
+				System.out.println("Passons par ("
+						+ Integer.toString(tab[i].getPosX()) + ", "
+						+ Integer.toString(tab[i].getPosY())
+						+ ")");
 			}
+			System.out.println("Je suis libre!");
 		} else {
 			chemin = null;
 		}
