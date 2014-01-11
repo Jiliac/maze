@@ -34,17 +34,17 @@ public abstract class MBox implements VertexInterface {
 	}
 
 	public boolean isArrival() {
-		if (this.getType() == 'A')
-			return true;
-		else
-			return false;
+		if (this instanceof ABox==true){
+			return true;}
+		else{
+			return false;}
 	}
 	
 	public boolean isDeparture() {
-		if (this.getType() == 'D')
-			return true;
-		else
-			return false;
+		if (this instanceof DBox==true){
+			return true;}
+		else{
+			return false;}
 	}
 
 	// ********** gestion de parente ********
@@ -78,6 +78,15 @@ public abstract class MBox implements VertexInterface {
 	// ************* implementation necessaire au shortestPath ****************
 	
 	private boolean isInShortestPath = false;
+	
+
+	public boolean isCrossable(){
+		if(this.getType()=='W')
+			return false;
+		else
+			return true;
+		
+		}
 
 	public boolean isInShortestPath() {
 		return isInShortestPath;

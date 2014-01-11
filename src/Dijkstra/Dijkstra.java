@@ -115,20 +115,25 @@ public class Dijkstra {
 		gi.setPrevious();
 
 		ArrayList<Triple> unreached = new ArrayList<Triple>();
-		
-		Triple r = null ;
+
+		Triple r = null;
 		Triple god = new Triple(null, 10000, null);
 
 		for (VertexInterface vi : this.gi.getGraph()) {
-			if(!vi.isDeparture())
+			if (vi.isDeparture()==false) {
 				unreached.add(new Triple(vi, (int) Integer.MAX_VALUE / 2, god));
-			else
-				r=new Triple(vi,0,null);
+				System.out.println("Initialisation du sommet non-atteint: ("
+						+ Integer.toString(vi.getPosX()) + ", "
+						+ Integer.toString(vi.getPosY()) + ")");
+			} else{
+				r = new Triple(vi, 0, null);
+				System.out.println("J'ai un depart : ("
+						+ Integer.toString(vi.getPosX()) + ", "
+						+ Integer.toString(vi.getPosY()) + ")");
+			}
 		}
-		
-		System.out.println("Depart a la racine de poids: "+r.getPoids()+" !");
-		
-		Triple pivot=r;
+
+		Triple pivot = r;
 
 		boolean done_win = false;
 		boolean done_lose = false;
@@ -144,7 +149,8 @@ public class Dijkstra {
 				Triple x = unreached.get(iterator);
 
 				if (x.getVi().isPrevious(pivot.getVi())
-						&& unreached.contains(x) && !x.getFather().equal(pivot) && !(x.getVi() instanceof WBox) ) {
+						&& unreached.contains(x) && x.getFather().equal(pivot)==false
+						&& x.getVi().isCrossable() && x.equal(pivot)==false) {
 
 					int ancien = x.getPoids();
 					int nouveau = pivot.getPoids() + 1;
@@ -153,8 +159,7 @@ public class Dijkstra {
 						x.setPoids(nouveau);
 						x.setFather(pivot);
 						System.out.println("Le nouveau poids du sommet ("
-								+ Integer.toString(x.getVi().getPosX())
-								+ ", "
+								+ Integer.toString(x.getVi().getPosX()) + ", "
 								+ Integer.toString(x.getVi().getPosY())
 								+ ") est " + Integer.toString(nouveau));
 					}
@@ -172,13 +177,18 @@ public class Dijkstra {
 					min = y;
 				}
 			}
-			pivot = min;
-			unreached.remove(pivot);
-			if (pivot.getVi().isArrival()) {
-				System.out.println("J'ai trouve la sortie!");
-				done_win = true;
+			if (min.getPoids() + 10 > (int) Integer.MAX_VALUE / 2) {
+				System.out
+						.println("Je suis coince a tout jamais dans ce labyrinthe la!");
+				done_lose = true;
+			} else {
+				pivot = min;
+				unreached.remove(pivot);
+				if (pivot.getVi().isArrival()) {
+					System.out.println("J'ai trouve la sortie!");
+					done_win = true;
+				}
 			}
-
 			if (unreached.size() != size) {
 				size = unreached.size();
 			} else {
@@ -192,23 +202,23 @@ public class Dijkstra {
 		}
 
 		ArrayList<VertexInterface> chemin = new ArrayList<VertexInterface>();
-		VertexInterface[] tab=new VertexInterface[pivot.getPoids()+1];
 
-		if (done_win) {
+		if (done_lose == false && done_win == true) {
+			VertexInterface[] tab = new VertexInterface[pivot.getPoids() + 1];
+
 			Triple z = pivot;
-			for (int p = pivot.getPoids(); p>=0; p=p-1) {
-				tab[p]=z.getVi();
-				//chemin.add(p, z.getVi());
+			for (int p = pivot.getPoids(); p >= 0; p = p - 1) {
+				tab[p] = z.getVi();
+				// chemin.add(p, z.getVi());
 				z = z.getFather();
+			}
+
+			for (int i = 0; i < tab.length; i++) {
+				chemin.add(tab[i]);
 			}
 		} else {
 			chemin = null;
 		}
-		
-		for (int i = 0; i < tab.length; i++) {
-			chemin.add(tab[i]);
-			}
-		
 		return chemin;
 	}
 }

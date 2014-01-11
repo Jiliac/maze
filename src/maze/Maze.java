@@ -76,21 +76,19 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	private ArrayList<VertexInterface> grid;
 
-/*
-	public Maze(ArrayList<VertexInterface> grid) {
-		this.grid = grid;
-		this.setPrevious();
-	}
-*/
+	/*
+	 * public Maze(ArrayList<VertexInterface> grid) { this.grid = grid;
+	 * this.setPrevious(); }
+	 */
 
 	public Maze() throws MazeException {
 		this.load("maze.txt");
-		//this.setPrevious();
+		// this.setPrevious();
 	}
 
 	public Maze(String fileName) throws MazeException {
 		this.load();
-		//this.setPrevious();
+		// this.setPrevious();
 	}
 
 	// ************* constructeur a partir d'un fichier texte **********
@@ -131,24 +129,24 @@ public class Maze implements GraphInterface, MazeViewSource {
 		}
 
 		// on contruit les relations de parente
-		//this.setPrevious();
+		// this.setPrevious();
 	}
 
 	public void load() throws MazeException {
 		this.load("maze.txt");
 	}
-		
+
 	public void load2(String fileName) throws MazeException {
 		try (FileInputStream fis = new FileInputStream(fileName);) {
 			CharBuffer cb = CharBuffer.allocate(1);
-			this.setBorne();
-			int i=0;
-			int j=0;
-			char c='c';
-			while(c!=';'){
-				c='c';
-				while(c!='/' && c!=';'){
-					grid.add(this.createBox(i, j, c=cb.get()));
+			int i = 0;
+			int j = 0;
+			char c ='c';
+			while (c != ';') {
+				c = 'c';
+				while (c != '/' && c != ';') {
+					c=cb.get();
+					grid.add(this.createBox(i, j, c));
 					i++;
 				}
 				j++;
@@ -156,8 +154,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.out
-					.println("Le fichier est introuvable.");
+			System.out.println("Le fichier est introuvable.");
 		} catch (BufferOverflowException e) {
 			e.printStackTrace();
 		} catch (ReadOnlyBufferException e) {
@@ -171,24 +168,33 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// - - - - - - - - - auxiliaire - - - - - - - - -
 
 	private MBox createBox(int posX, int posY, char c) throws MazeException {
-		MBox retour = new EBox(posX, posY);
-		if (c == 'W')
-			retour = new WBox(posX, posY);
-		else if (c == 'E') { //variable deja initialise
-		} else if (c == 'A') {
+
+		switch (c) {
+		case 'W':
+			return new WBox(posX, posY);
+
+		case 'A': {
 			if (grid.indexOf(new ABox(0, 0)) != -1)
 				throw new MazeException("Deja une case d'arrivee!");
 			else
-				retour = new ABox(posX, posY);
-		} else if (c == 'D') {
+				return new ABox(posX, posY);
+		}
+
+		case 'D': {
 			if (grid.indexOf(new DBox(0, 0)) != -1)
 				throw new MazeException("Deja une case de depart!");
 			else
-				retour = new DBox(posX, posY);
-		} else
+				return new DBox(posX, posY);
+		}
+
+		case 'E':
+			return new EBox(posX, posY);
+
+		default:
 			throw new MazeException(" Caractere non recevable: " + c);
 
-		return retour;
+		}
+
 	}
 
 	// ******* sauvegarder dans un fichier texte *********
@@ -209,8 +215,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.out
-					.println("Le fichier existe deja ou ne peut etre ecrit.");
+			System.out.println("Le fichier existe deja ou ne peut etre ecrit.");
 		} catch (BufferOverflowException e) {
 			e.printStackTrace();
 		} catch (ReadOnlyBufferException e) {
@@ -228,10 +233,10 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// ************ gestion de parente ***************
 
 	private int maxX, maxY;
-	
-	public int getSizeMax(){
+
+	public int getSizeMax() {
 		this.setBorne();
-		return (maxX+1)*(maxY+1);
+		return (maxX + 1) * (maxY + 1);
 	}
 
 	private void setBorne() {
@@ -249,13 +254,13 @@ public class Maze implements GraphInterface, MazeViewSource {
 	public void setPrevious() {
 		this.setBorne();
 
-		for (int posX = 1; posX < maxX; posX++) {
-			for (int posY = 1; posY < maxY; posY++) {
+		for (int posX = 0; posX < maxX; posX++) {
+			for (int posY = 0; posY < maxY; posY++) {
 				VertexInterface box = this.getVI(posX, posY);
 
-				box.addFils(this.getVI(posX , posY - 1));
-				box.addFils(this.getVI(posX , posY + 1));
-				box.addFils(this.getVI(posX - 1, posY));
+				box.addFils(this.getVI(posX, (posY - 1<0)?0:posY-1));
+				box.addFils(this.getVI(posX, posY + 1));
+				box.addFils(this.getVI((posX - 1<0)?0:posX-1, posY));
 				box.addFils(this.getVI(posX + 1, posY));
 			}
 		}
@@ -302,7 +307,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 	public ArrayList<VertexInterface> getShortestPath() {
 		Pi pi = new Pi();
 		Dijkstra d = new Dijkstra(this, pi, new ASet(pi));
-		ArrayList<VertexInterface> chemin =d.shortestPath();
+		ArrayList<VertexInterface> chemin = d.shortestPath();
 		return chemin;
 	}
 

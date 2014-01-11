@@ -4,6 +4,8 @@ public interface VertexInterface {
 	public int getPosX();
 
 	public int getPosY();
+	
+	public boolean isCrossable();
 
 	public boolean equal(VertexInterface vi);
 
