@@ -1,6 +1,8 @@
 package Dijkstra;
 
 public class Triple {
+	/********** constructeurs **************/
+	
 	private VertexInterface vi;
 	private int poids;
 	private Triple father;
@@ -16,7 +18,38 @@ public class Triple {
 		this.poids = poids;
 		this.father = father;
 	}
+	
+	/********** methode de test ***************/
+	
+	public boolean equal(Triple t) {
+		boolean retour = false;
+		if (this.vi == null) {
+			retour = false;
+		}
 
+		else {
+			if (t.getVi().getPosX() == this.vi.getPosX()
+					&& t.getVi().getPosY() == this.vi.getPosY()) {
+				retour = true;
+			}
+		}
+		return retour;
+	}
+	
+	public boolean isPrevious(Triple pivot){
+		return vi.isPrevious(pivot.getVi());
+	}
+	
+	public boolean isFather(Triple pivot){
+		return father.equal(pivot);
+	}
+	
+	public boolean isCrossable(){
+		return vi.isCrossable();
+	}
+
+	/*********** getters et setters ***********/
+	
 	public VertexInterface getVi() {
 		return this.vi;
 	}
@@ -40,24 +73,4 @@ public class Triple {
 	public Triple getFather() {
 		return this.father;
 	}
-
-	public boolean equal(Triple t) {
-		boolean retour = false;
-		if (this == null || this.vi == null) {
-			retour = false;
-		}
-
-		else {
-			if (t.getVi().getPosX() == this.vi.getPosX()
-					&& t.getVi().getPosY() == this.vi.getPosY()) {
-				retour = true;
-			}
-		}
-		return retour;
-	}
-
-	// public boolean equal(Triple t){
-	// return this.getVi().equal(t.getVi());
-
-	// }
 }

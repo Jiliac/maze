@@ -41,32 +41,32 @@ public class Maze implements GraphInterface, MazeViewSource {
 		String str = "" + c;
 
 		// pour le shortestPath
-		if (str == "E" && box.isInShortestPath()==true)
+		if (str == "E" && box.isInShortestPath() == true)
 			str = "*";
 
 		return str;
 	}
 
 	public void setSymbolForBox(int row, int column, String str) {
-		
-		switch(str){
-			case "A":
-				this.setVI(row, column, new ABox(row, column));
-				break;
-			
-			case "E":
-				this.setVI(row, column, new EBox(row, column));
-				break;
-				
-			case "W":
-				this.setVI(row, column, new WBox(row, column));
-				break;
-				
-			case "D":
-				this.setVI(row, column, new DBox(row, column));
-				break;
+
+		switch (str) {
+		case "A":
+			this.setVI(row, column, new ABox(row, column));
+			break;
+
+		case "E":
+			this.setVI(row, column, new EBox(row, column));
+			break;
+
+		case "W":
+			this.setVI(row, column, new WBox(row, column));
+			break;
+
+		case "D":
+			this.setVI(row, column, new DBox(row, column));
+			break;
 		}
-	
+
 	}
 
 	public boolean drawMaze(Graphics g, MazeView mazeView) {
@@ -147,35 +147,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 		this.load("maze.txt");
 	}
 
-	public void load2(String fileName) throws MazeException {
-		try (FileInputStream fis = new FileInputStream(fileName);) {
-			CharBuffer cb = CharBuffer.allocate(1);
-			int i = 0;
-			int j = 0;
-			char c ='c';
-			while (c != ';') {
-				c = 'c';
-				while (c != '/' && c != ';') {
-					c=cb.get();
-					grid.add(this.createBox(i, j, c));
-					i++;
-				}
-				j++;
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("Le fichier est introuvable.");
-		} catch (BufferOverflowException e) {
-			e.printStackTrace();
-		} catch (ReadOnlyBufferException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	// - - - - - - - - - auxiliaire - - - - - - - - -
 
 	private MBox createBox(int posX, int posY, char c) throws MazeException {
@@ -213,7 +184,14 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// Necessite d'avoir comme nom de fichier "exemple.txt" et pas "exemple".
 
 	public void save(String fileName) {
-		try (FileOutputStream fis = new FileOutputStream("./" + fileName);) {
+		try {
+			FileOutputStream fis = new FileOutputStream("./" + fileName);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Le fichier existe deja ou ne peut etre ecrit.");
+		}
+		
+		try {
 			CharBuffer cb = CharBuffer.allocate(1);
 			this.setBorne();
 			for (int i = 0; i < maxX; i++) {
@@ -224,14 +202,9 @@ public class Maze implements GraphInterface, MazeViewSource {
 			}
 			cb.put(';');
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("Le fichier existe deja ou ne peut etre ecrit.");
 		} catch (BufferOverflowException e) {
 			e.printStackTrace();
 		} catch (ReadOnlyBufferException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -269,10 +242,12 @@ public class Maze implements GraphInterface, MazeViewSource {
 			for (int posY = 0; posY <= maxY; posY++) {
 				VertexInterface box = this.getVI(posX, posY);
 
-				box.addFils(this.getVI(posX, (posY - 1<0)?0:(posY-1)));
-				box.addFils(this.getVI(posX, (posY + 1>maxY)?maxY:posY+1));
-				box.addFils(this.getVI((posX - 1<0)?0:(posX-1), posY));
-				box.addFils(this.getVI((posX + 1>maxX)?maxX:(posX+1), posY));
+				box.addFils(this.getVI(posX, (posY - 1 < 0) ? 0 : (posY - 1)));
+				box.addFils(this.getVI(posX, (posY + 1 > maxY) ? maxY
+						: posY + 1));
+				box.addFils(this.getVI((posX - 1 < 0) ? 0 : (posX - 1), posY));
+				box.addFils(this.getVI((posX + 1 > maxX) ? maxX : (posX + 1),
+						posY));
 			}
 		}
 	}
@@ -291,33 +266,14 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 	// ******** methodes simples de GraphInterface ********
 
-	public VertexInterface getDeparture() {
-		MBox retour = null;
-		for (VertexInterface vi : grid) {
-			MBox box = (MBox) vi;
-			if (box.getType() == 'D')
-				retour = box;
-		}
-
-		return retour;
-	}
-
 	public ArrayList<VertexInterface> getGraph() {
 		return grid;
-	}
-
-	public int getPoids(VertexInterface x, VertexInterface y) {
-		int retour = Integer.MAX_VALUE / 2;
-		if (this.isPrevious(x, y))
-			retour = 1;
-		return retour;
 	}
 
 	// ******** getter *********
 
 	public ArrayList<VertexInterface> getShortestPath() {
-		Pi pi = new Pi();
-		Dijkstra d = new Dijkstra(this, pi, new ASet(pi));
+		Dijkstra d = new Dijkstra(this);
 		ArrayList<VertexInterface> chemin = d.shortestPath();
 		return chemin;
 	}
