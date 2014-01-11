@@ -12,20 +12,15 @@ public class MazeController implements MazeViewController {
 	public void calculateShortestPath() {
 		int compteur = 0;
 		ArrayList<VertexInterface> chemin = maze.getShortestPath();
-		if (chemin != null) {
-			for (VertexInterface vi : chemin)
-				if (vi == null) {
-					System.out.println("Null " + compteur + " fois.");
-					compteur++;
-				}
+		for (VertexInterface vi : chemin)
+			if (vi == null) {
+				System.out.println("Null " + compteur + " fois.");
+				compteur++;
+			}
 
-				else {
-					vi.setInShortestPath(true);
-				}
-		}
-		// ca marche si on utilise ca qu'une seule fois mais ca ne marcherait
-		// pas si on doit changer les cases...
-
+			else {
+				vi.setInShortestPath(true);
+			}
 	}
 
 	public MazeViewSource openMaze(String fileName) {
@@ -43,7 +38,7 @@ public class MazeController implements MazeViewController {
 
 	public MazeViewSource newMaze() {
 		maze = new Maze();
-		
+
 		return maze;
 		// ATTENTION la j'ouvre a partir du fichier texte deja creer
 		// on pourrait personnaliser la hauteur largeur etc...
@@ -57,7 +52,7 @@ public class MazeController implements MazeViewController {
 	// on pourrait personnaliser la hauteur largeur etc...
 	public MazeController() {
 		maze = new Maze();
-		
+
 	}
 
 	public MazeController(String fileName) {

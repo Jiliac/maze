@@ -74,7 +74,7 @@ public class Dijkstra {
 				pivot = min;
 				unreached.remove(pivot);
 				if (pivot.getVi().isArrival()) {
-					System.out.println("J'ai trouve la sortie!");
+					System.out.println("J'ai trouve la sortie!\nle chemin est:\n");
 					done_win = true;
 				}
 			}
@@ -108,7 +108,7 @@ public class Dijkstra {
 						+ Integer.toString(tab[i].getPosX()) + ", "
 						+ Integer.toString(tab[i].getPosY()) + ")");
 			}
-			System.out.println("Je suis libre!");
+			System.out.println("Je suis libre!\n\n**************************\n");
 		}
 		return chemin;
 	}

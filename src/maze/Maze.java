@@ -37,7 +37,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		String str = "" + c;
 
 		// pour le shortestPath
-		if (str == "E" && box.isInShortestPath() == true)
+		if (c == 'E' && box.isInShortestPath())
 			str = "*";
 
 		return str;
@@ -83,11 +83,6 @@ public class Maze implements GraphInterface, MazeViewSource {
 	// ************* constructreurs ***************
 
 	private ArrayList<VertexInterface> grid;
-
-	/*
-	 * public Maze(ArrayList<VertexInterface> grid) { this.grid = grid;
-	 * this.setPrevious(); }
-	 */
 
 	public Maze() {
 		try {
@@ -246,16 +241,18 @@ public class Maze implements GraphInterface, MazeViewSource {
 
 		for (int posX = 0; posX <= maxX; posX++) {
 			for (int posY = 0; posY <= maxY; posY++) {
-				VertexInterface box = this.getVI(posX, posY);
-
-				box.addFils(this.getVI(posX, (posY - 1 < 0) ? 0 : (posY - 1)));
-				box.addFils(this.getVI(posX, (posY + 1 > maxY) ? maxY
-						: posY + 1));
-				box.addFils(this.getVI((posX - 1 < 0) ? 0 : (posX - 1), posY));
-				box.addFils(this.getVI((posX + 1 > maxX) ? maxX : (posX + 1),
-						posY));
+				this.addFils(posX, posY);
 			}
 		}
+	}
+
+	private void addFils(int posX, int posY) {
+		VertexInterface box = this.getVI(posX, posY);
+
+		box.addFils(this.getVI(posX, (posY - 1 < 0) ? 0 : (posY - 1)));
+		box.addFils(this.getVI(posX, (posY + 1 > maxY) ? maxY : posY + 1));
+		box.addFils(this.getVI((posX - 1 < 0) ? 0 : (posX - 1), posY));
+		box.addFils(this.getVI((posX + 1 > maxX) ? maxX : (posX + 1), posY));
 	}
 
 	public boolean isPrevious(VertexInterface pere, VertexInterface fils) {
@@ -276,7 +273,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		return grid;
 	}
 
-	// ******** getter *********
+	// ******** getters et setters *********
 
 	public ArrayList<VertexInterface> getShortestPath() {
 		Dijkstra d = new Dijkstra(this);
@@ -308,7 +305,7 @@ public class Maze implements GraphInterface, MazeViewSource {
 		else {
 			grid.remove(indexOfBox);
 			grid.add(x);
-			// faudrait p-e refaire les liens de parente de cette box??
+			this.addFils(x.getPosX(), x.getPosY());
 		}
 	}
 }
